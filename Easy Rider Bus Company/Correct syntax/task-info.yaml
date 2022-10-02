@@ -159,6 +159,6 @@ files:
     n\"\n                                     f\"a_time: {result[3]}\")\n        return\
     \ CheckResult.correct()\n\n\nif __name__ == '__main__':\n    EasyRiderStage2('easyrider.easyrider').run_tests()\n"
   learner_created: false
-feedback_link: https://hyperskill.org/projects/128/stages/681/implement#comment
+feedback_link: https://hyperskill.org/learn/step/10889#comment
 status: Unchecked
 record: -1
