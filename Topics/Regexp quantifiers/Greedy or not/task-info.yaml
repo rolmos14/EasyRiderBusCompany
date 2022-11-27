@@ -1,8 +1,8 @@
 type: choice
 is_multiple_choice: false
 options:
-- text: "Yes"
 - text: It depends on what kind of quantifier we are using
+- text: "Yes"
 - text: "No"
 files:
 - name: main.py

@@ -12,9 +12,6 @@ files:
     if __name__ == '__main__':
         EasyRiderStage3('easyrider.easyrider').run_tests()
   learner_created: false
-- name: test/__init__.py
-  visible: false
-  learner_created: false
 - name: test/tests.py
   visible: false
   text: |
@@ -92,6 +89,12 @@ files:
     if __name__ == '__main__':
         EasyRiderStage3('easyrider.easyrider').run_tests()
   learner_created: false
+- name: test/__init__.py
+  visible: false
+  learner_created: false
 feedback_link: https://hyperskill.org/learn/step/10890#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 27 Nov 2022 16:30:35 UTC
 record: -1

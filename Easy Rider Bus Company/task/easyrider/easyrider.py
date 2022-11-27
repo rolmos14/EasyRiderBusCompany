@@ -58,7 +58,21 @@ class BusStopDataAnalyzer:
         for field, error in field_error.items():
             print(f"{field}: {error}")
 
+    def extract_lines(self) -> 'prints line names and number of stops':
+        lines_stops = dict()  # {bus_id: stops}
+        # Iterate over all the stops and update lines_stops dictionary
+        for stop in self.db:
+            bus_id = stop["bus_id"]
+            if bus_id in lines_stops:
+                lines_stops[bus_id] += 1
+            else:
+                lines_stops[bus_id] = 1
+        # Print result
+        print("Line names and number of stops:")
+        for bus_id, stops in lines_stops.items():
+            print(f"bus_id: {bus_id}, stops: {stops}")
+
 
 database = json.loads(input())
 stop_data_validator = BusStopDataAnalyzer(database)
-stop_data_validator.validate_data()
+stop_data_validator.extract_lines()
