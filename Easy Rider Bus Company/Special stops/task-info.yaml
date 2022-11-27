@@ -7,6 +7,17 @@ files:
 - name: tests.py
   visible: false
   text: |
+    from test.tests import EasyRiderStage4
+
+    if __name__ == '__main__':
+        EasyRiderStage4('easyrider.easyrider').run_tests()
+  learner_created: false
+- name: test/__init__.py
+  visible: false
+  learner_created: false
+- name: test/tests.py
+  visible: false
+  text: |
     from hstest.stage_test import *
     from hstest.test_case import TestCase
     import re

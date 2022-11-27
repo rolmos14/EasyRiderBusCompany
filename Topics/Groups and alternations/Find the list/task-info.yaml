@@ -1,0 +1,17 @@
+type: code
+files:
+- name: main.py
+  visible: true
+  text: |-
+    import re
+
+
+    # put your regex in the variable template
+    template = ""
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12681#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sat, 05 Nov 2022 12:28:54 UTC
+record: -1

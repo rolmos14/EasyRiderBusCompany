@@ -6,6 +6,17 @@ files:
   learner_created: false
 - name: tests.py
   visible: false
+  text: |
+    from test.tests import EasyRiderStage6
+
+    if __name__ == '__main__':
+        EasyRiderStage6('easyrider.easyrider').run_tests()
+  learner_created: false
+- name: test/__init__.py
+  visible: false
+  learner_created: false
+- name: test/tests.py
+  visible: false
   text: "from hstest.stage_test import *\nfrom hstest.test_case import TestCase\n\
     import re\n\n\nclass EasyRiderStage6(StageTest):\n    def generate(self) -> List[TestCase]:\n\
     \        return [\n\n            TestCase(stdin='[{\"bus_id\" : 128, \"stop_id\"\

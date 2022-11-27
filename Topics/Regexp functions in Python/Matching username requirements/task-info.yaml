@@ -1,0 +1,12 @@
+type: code
+files:
+- name: main.py
+  visible: true
+  text: import re
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/14185#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 21 Oct 2022 18:40:28 UTC
+record: -1
