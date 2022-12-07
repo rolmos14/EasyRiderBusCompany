@@ -72,7 +72,69 @@ class BusStopDataAnalyzer:
         for bus_id, stops in lines_stops.items():
             print(f"bus_id: {bus_id}, stops: {stops}")
 
+    def check_stops(self) -> 'prints stop names of type Start, Transfer and Finish':
+        if self.check_start_finish():
+            all_stops = []  # list to keep already checked stops, in order to find transfer stops
+            start_stops = []
+            transfer_stops = []
+            finish_stops = []
+            # Iterate over all the stops
+            for stop in self.db:
+                stop_name = stop["stop_name"]
+                stop_type = stop["stop_type"]
+                if stop_type == "S":
+                    start_stops.append(stop_name)
+                if stop_name in all_stops:
+                    transfer_stops.append(stop_name)
+                if stop_type == "F":
+                    finish_stops.append(stop_name)
+                all_stops.append(stop_name)
+            # Print result, removing duplicates with set
+            start_stops = list(set(start_stops))
+            start_stops.sort()
+            transfer_stops = list(set(transfer_stops))
+            transfer_stops.sort()
+            finish_stops = list(set(finish_stops))
+            finish_stops.sort()
+            print(f"Start stops: {len(start_stops)} {start_stops}")
+            print(f"Transfer stops: {len(transfer_stops)} {transfer_stops}")
+            print(f"Finish stops: {len(finish_stops)} {finish_stops}")
+
+    def check_start_finish(self) -> 'checks if all bus lines have Start and Finish stop':
+        checked_bus_lines = []
+        # Iterate over all the stops
+        for stop in self.db:
+            current_bus_line = stop["bus_id"]
+            # If bus line not checked yet
+            if current_bus_line not in checked_bus_lines:
+                checked_bus_lines.append(current_bus_line)
+                # Check that current bus line has exactly one Start and one Finish
+                stop_type_s = False
+                stop_type_f = False
+                current_bus_line_stops = [stop for stop in self.db if stop["bus_id"] == current_bus_line]
+                for current_stop in current_bus_line_stops:
+                    stop_type = current_stop["stop_type"]
+                    if stop_type == "S":
+                        if not stop_type_s:
+                            stop_type_s = True
+                        else:
+                            # Bus line has more than one Start stop
+                            print(f"There is no start or end stop for the line: {current_bus_line}.")
+                            return False
+                    elif stop_type == "F":
+                        if not stop_type_f:
+                            stop_type_f = True
+                        else:
+                            # Bus line has more than one Finish stop
+                            print(f"There is no start or end stop for the line: {current_bus_line}.")
+                            return False
+                if not stop_type_s or not stop_type_f:
+                    # Bus line has missing Start or Finish stop
+                    print(f"There is no start or end stop for the line: {current_bus_line}.")
+                    return False
+        return True
+
 
 database = json.loads(input())
 stop_data_validator = BusStopDataAnalyzer(database)
-stop_data_validator.extract_lines()
+stop_data_validator.check_stops()
