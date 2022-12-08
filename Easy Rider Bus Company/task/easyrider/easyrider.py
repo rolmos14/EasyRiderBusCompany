@@ -143,14 +143,9 @@ class BusStopDataAnalyzer:
             # Current bus line
             if stop["bus_id"] == current_bus_line:
                 if current_bus_line not in wrong_lines_stop:
-                    if previous_a_time:  # check that it's not the very first stop
-                        previous_a_time_split = previous_a_time.split(":")
-                        prev_a_time_total_min = int(previous_a_time_split[0]) * 60 + int(previous_a_time_split[1])
-                        current_a_time_split = stop["a_time"].split(":")
-                        current_a_time_total_min = int(current_a_time_split[0]) * 60 + int(current_a_time_split[1])
-                        # Check if it's a wrong stop to add it to wrong_lines_stop dict
-                        if current_a_time_total_min <= prev_a_time_total_min:
-                            wrong_lines_stop[current_bus_line] = stop["stop_name"]
+                    # Check if it's a wrong stop to add it to wrong_lines_stop dict
+                    if stop["a_time"] <= previous_a_time:
+                        wrong_lines_stop[current_bus_line] = stop["stop_name"]
                     previous_a_time = stop["a_time"]
                 else:
                     continue
