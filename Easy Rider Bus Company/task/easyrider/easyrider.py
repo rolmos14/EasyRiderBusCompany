@@ -134,7 +134,39 @@ class BusStopDataAnalyzer:
                     return False
         return True
 
+    def check_arrive_time(self) -> 'checks if arrive times are increasing and prints result':
+        wrong_lines_stop = dict()  # dict to store wrong lines and the stop with wrong arrive time
+        current_bus_line = self.db[0]["bus_id"]
+        previous_a_time = ""
+        # Iterate over all the stops
+        for stop in self.db:
+            # Current bus line
+            if stop["bus_id"] == current_bus_line:
+                if current_bus_line not in wrong_lines_stop:
+                    if previous_a_time:  # check that it's not the very first stop
+                        previous_a_time_split = previous_a_time.split(":")
+                        prev_a_time_total_min = int(previous_a_time_split[0]) * 60 + int(previous_a_time_split[1])
+                        current_a_time_split = stop["a_time"].split(":")
+                        current_a_time_total_min = int(current_a_time_split[0]) * 60 + int(current_a_time_split[1])
+                        # Check if it's a wrong stop to add it to wrong_lines_stop dict
+                        if current_a_time_total_min <= prev_a_time_total_min:
+                            wrong_lines_stop[current_bus_line] = stop["stop_name"]
+                    previous_a_time = stop["a_time"]
+                else:
+                    continue
+            # Next bus line
+            else:
+                current_bus_line = stop["bus_id"]
+                previous_a_time = stop["a_time"]
+        # Print result
+        print("Arrival time test:")
+        if not wrong_lines_stop:
+            print("OK")
+        else:
+            for bus_id, stop_name in wrong_lines_stop.items():
+                print(f"bus_id line {bus_id}: wrong time on station {stop_name}")
+
 
 database = json.loads(input())
 stop_data_validator = BusStopDataAnalyzer(database)
-stop_data_validator.check_stops()
+stop_data_validator.check_arrive_time()
