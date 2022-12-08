@@ -161,7 +161,24 @@ class BusStopDataAnalyzer:
             for bus_id, stop_name in wrong_lines_stop.items():
                 print(f"bus_id line {bus_id}: wrong time on station {stop_name}")
 
+    def check_on_demand_stops(self) -> 'checks that all on demand stops are valid':
+        all_stops = [stop["stop_name"] for stop in self.db]
+        start_stops = [stop["stop_name"] for stop in self.db if stop["stop_type"] == "S"]
+        transfer_stops = [stop_name for stop_name in all_stops if all_stops.count(stop_name) > 1]
+        on_demand_stops = [stop["stop_name"] for stop in self.db if stop["stop_type"] == "O"]
+        finish_stops = [stop["stop_name"] for stop in self.db if stop["stop_type"] == "F"]
+        wrong_on_demand_stops = [stop_name for stop_name in on_demand_stops if stop_name in start_stops +
+                                 transfer_stops + finish_stops]
+        # Print result, removing duplicates with set
+        wrong_on_demand_stops = list(set(wrong_on_demand_stops))
+        wrong_on_demand_stops.sort()
+        print("On demand stops test:")
+        if not wrong_on_demand_stops:
+            print("OK")
+        else:
+            print(f"Wrong stop type: {wrong_on_demand_stops}")
+
 
 database = json.loads(input())
 stop_data_validator = BusStopDataAnalyzer(database)
-stop_data_validator.check_arrive_time()
+stop_data_validator.check_on_demand_stops()
